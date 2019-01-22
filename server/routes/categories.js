@@ -27,20 +27,6 @@ Router.get('/categories', (req, res, next) => {
   })
 })
 
-Router.get('/listings/:category_id', (req, res, next) => {
-  const sql = `SELECT * FROM listings WHERE category_id = ? `
-  const value = [req.query.categoryId]
-  
-  conn.query(sql, value, (err, results, fields) => {
-    if(value === categoryId){
-      return value
-    }
-
-    console.log(results)
-    res.json(results)
-  })
-})
-
 Router.post('/listings', (req, res, next) => {
   const sql = `INSERT INTO listings (img, category_id, listing_name) VALUES (?, ?, ?)`
   const values = [req.body.img, req.body.categoryId, req.body.listingName]
@@ -51,5 +37,18 @@ Router.post('/listings', (req, res, next) => {
   })
 
 })
+
+Router.get('/listings/')
+
+Router.get('/:listings/:id', (req, res, next) => {
+  const sql = `SELECT * FROM listings WHERE category_id = ? `
+  const id = req.params.id
+  
+  conn.query(sql, [id], (err, results, fields) => {
+    console.log(results)
+    res.json(results)
+  })
+})
+
 
 module.exports = Router
