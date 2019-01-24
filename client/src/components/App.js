@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom' 
 import store from '../store'
+import '../styles/App.css'
 
-import Home from './Home'
+import Categories from './Categories'
+import Category from './Category'
 
 class App extends Component {
   render() {
@@ -11,7 +13,8 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={Categories} />
+            <Route path="/:slug" component={Category} />
           </div>
         </Router>
       </Provider>

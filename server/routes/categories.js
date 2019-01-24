@@ -38,13 +38,22 @@ Router.post('/listings', (req, res, next) => {
 
 })
 
-Router.get('/listings/')
+Router.get('/listing/:id', (req, res, next) => {
+  const sql = `SELECT * FROM listings WHERE id = ?`
+  const id =req.params.id
 
-Router.get('/:listings/:id', (req, res, next) => {
+    conn.query(sql, [id], (err, results, fields) => {
+      console.log(results)
+      res.json(results)
+    })
+})
+
+Router.get('/:category/:id', (req, res, next) => {
   const sql = `SELECT * FROM listings WHERE category_id = ? `
   const id = req.params.id
+  const category = req.params.category
   
-  conn.query(sql, [id], (err, results, fields) => {
+  conn.query(sql, [id], [category], (err, results, fields) => {
     console.log(results)
     res.json(results)
   })
