@@ -3,7 +3,8 @@ const initialState = {
   currentCategory: {
     category: {},
     listings:[]
-  }
+  },
+  currentListing: {}
 }
 
 export default function (state = initialState, action) {
@@ -15,7 +16,8 @@ export default function (state = initialState, action) {
         category: state.categories.find(category => category.slug === action.payload.slug),
         listings: action.payload.listings
       }}
-    default:
+    case 'GET_LISTING':
+    return {...state, currentListing: action.payload}
+    }
       return state
   }
-}

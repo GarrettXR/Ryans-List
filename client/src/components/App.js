@@ -7,6 +7,7 @@ import '../styles/App.css'
 import Categories from './Categories'
 import Category from './Category'
 import Create from './Create'
+import Listing from './Listing'
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
             <Switch>
             <Route path="/" exact component={Categories} />
             <Route path="/create/:slug"component={Create} />
+            <Route path="/listing/:id" component={Listing} />
             <Route path="/:slug" component={Category} />
             
             </Switch>

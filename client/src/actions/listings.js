@@ -18,8 +18,7 @@ var promise = new Promise((resolve, reject) => {
 }
 
 export function createPost(post) {
-   return axios.post('/listings', post).then(resp => {
-    })
+   return axios.post('/listings', post)
 }
 
 export function getCategory(slug) {
@@ -30,11 +29,21 @@ export function getCategory(slug) {
     }
 } 
 
+export function getListing(id) {
+    axios.get('/listing/' + id).then(resp => {
+        store.dispatch({
+            type: 'GET_LISTNG',
+            payload: resp.data[0]
+        })
+    })
+}
+
     function getCat(slug) {
-    axios.get('/category/'+ slug).then(resp => {
+    axios.get('/listings/'+ slug).then(resp => {
         store.dispatch({
             type: 'GET_CATEGORY',
             payload: {
+                slug: slug,
                 listings: resp.data
             }
         })

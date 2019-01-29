@@ -27,6 +27,21 @@ Router.get('/categories', (req, res, next) => {
   })
 })
 
+Router.get('/listings/:slug', (req, res, next) => {
+  const getSql ='SELECT id FROM categories WHERE slug = ?'
+
+    conn.query(getSql, [req.params.slug], (error0, results0, fields0) => {
+      const sql = `SELECT listings.img, listings.listing_name, listings.id, listings.description 
+                   FROM listings 
+                   LEFT JOIN categories ON listings.category_id = categories.id 
+                   WHERE listings.category_id = ?`
+      conn.query(sql, [results0[0].id, results0[0].id], (error, results, fields) => {
+        res.json(results)
+    })
+  })
+})
+
+
 Router.post('/listings', (req, res, next) => {
   const getSql ='SELECT id FROM categories WHERE slug = ?'
 
@@ -50,21 +65,5 @@ Router.get('/listing/:id', (req, res, next) => {
       res.json(results)
     })
 })
-
-Router.get('/listings/:slug', (req, res, next) => {
-  const getSql ='SELECT id FROM categories WHERE slug = ?'
-
-    conn.query(getSql, [req.params.slug], (error0, results0, fields0) => {
-      const sql = `SELECT listings.img, listings.listing_name, listings.description 
-                   FROM listings 
-                   LEFT JOIN categories ON listings.category_id = categories.id 
-                   WHERE listings.category_id = ? `
-      conn.query(sql, [results0[0].id, results0[0].id], (error, results, fields) => {
-        console.log(results)
-        res.json(results)
-    })
-  })
-})
-
 
 module.exports = Router
