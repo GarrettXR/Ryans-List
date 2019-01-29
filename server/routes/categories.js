@@ -28,15 +28,18 @@ Router.get('/categories', (req, res, next) => {
 })
 
 Router.post('/listings', (req, res, next) => {
-  const sql = `INSERT INTO listings (img, category_id, listing_name) VALUES (?, ?, ?)`
-  const values = [req.body.img, req.body.categoryId, req.body.listingName]
+  const getSql ='SELECT id FROM categories WHERE slug = ?'
 
-  conn.query(sql, values, (err, results, fields) => {
-    console.log(results)
-    res.json({message: "Listing Added"})
-  })
-
-})
+    conn.query(getSql, [req.body.slug], (error0, results0, fields0) => {
+      const sql = `INSERT INTO listings (img, listing_name, description, category_id) VALUES (?, ?, ?, ?)`
+      const values = [req.body.image, req.body.listingName, req.body.description, results0[0].id]
+ 
+      conn.query(sql, values, (err, results, fields) => {
+        console.log(results)
+        res.json({message: "Listing Added"})
+      })
+    })
+ })
 
 Router.get('/listing/:id', (req, res, next) => {
   const sql = `SELECT * FROM listings WHERE id = ?`
@@ -48,14 +51,18 @@ Router.get('/listing/:id', (req, res, next) => {
     })
 })
 
-Router.get('/:category/:id', (req, res, next) => {
-  const sql = `SELECT * FROM listings WHERE category_id = ? `
-  const id = req.params.id
-  const category = req.params.category
-  
-  conn.query(sql, [id], [category], (err, results, fields) => {
-    console.log(results)
-    res.json(results)
+Router.get('/listings/:slug', (req, res, next) => {
+  const getSql ='SELECT id FROM categories WHERE slug = ?'
+
+    conn.query(getSql, [req.params.slug], (error0, results0, fields0) => {
+      const sql = `SELECT listings.img, listings.listing_name, listings.description 
+                   FROM listings 
+                   LEFT JOIN categories ON listings.category_id = categories.id 
+                   WHERE listings.category_id = ? `
+      conn.query(sql, [results0[0].id, results0[0].id], (error, results, fields) => {
+        console.log(results)
+        res.json(results)
+    })
   })
 })
 

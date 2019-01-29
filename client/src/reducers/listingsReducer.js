@@ -12,8 +12,8 @@ export default function (state = initialState, action) {
       return {...state, categories: action.payload}
     case 'GET_CATEGORY':
       return {...state, currentCategory: {
-        category: categories.find(category => category.id === payload.id),
-        listings: payload.listings
+        category: state.categories.find(category => category.slug === action.payload.slug),
+        listings: action.payload.listings
       }}
     default:
       return state

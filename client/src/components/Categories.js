@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link} from 'react-router-dom'
 import { getCategories } from '../actions/listings';
 import '../styles/App.css'
+import { isNull } from 'util';
 
 class Categories extends Component {
  
