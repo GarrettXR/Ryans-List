@@ -31,8 +31,9 @@ export function getCategory(slug) {
 
 export function getListing(id) {
     axios.get('/listing/' + id).then(resp => {
+        console.log('listing',resp.data[0])
         store.dispatch({
-            type: 'GET_LISTNG',
+            type: 'GET_LISTING',
             payload: resp.data[0]
         })
     })

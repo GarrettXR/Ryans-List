@@ -16,10 +16,10 @@ class Listing extends Component {
 
     render() {
         return (
-            <div>
-             <p>{this.props.img}</p>
-             <p>{this.props.listing_name}</p>
-             <p>{this.props.description}</p>
+            <div id="listingBody">
+                 <p>{this.props.current.img}</p>
+                 <p>{this.props.current.listing_name}</p>
+                 <p>{this.props.current.description}</p>
             </div>
         )
     }
@@ -29,10 +29,7 @@ class Listing extends Component {
 function mapStateToProps(appState) {
     console.log(appState)
     return {
-      img: appState.listingsReducer.currentListing.img,
-      listing_name: appState.listingsReducer.currentListing.listing_name,
-      description: appState.listingReducer.currentListing.description
-
+        current: appState.listingsReducer.currentListing
     }
   }
 

@@ -17,7 +17,7 @@ export default function (state = initialState, action) {
         listings: action.payload.listings
       }}
     case 'GET_LISTING':
-    return {...state, currentListing: action.payload}
+      return {...state, currentListing: action.payload}
     }
       return state
   }
