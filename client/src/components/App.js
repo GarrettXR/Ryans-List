@@ -20,7 +20,6 @@ class App extends Component {
             <Route path="/create/:slug"component={Create} />
             <Route path="/listing/:id" component={Listing} />
             <Route path="/:slug" component={Category} />
-            
             </Switch>
           </div>
         </Router>
